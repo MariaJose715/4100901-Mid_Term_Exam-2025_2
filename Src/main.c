@@ -22,6 +22,7 @@ static void peripherals_init(void)
     // Configuración de GPIOs
     gpio_init(GPIOA, 5, 0x01, 0x00, 0x01, 0x00, 0x00);  // LD2 (heartbeat)
     gpio_init(GPIOC, 13, 0x00, 0x00, 0x01, 0x00, 0x00);  // Botón
+    gpio_init(GPIOB, 4, 0x02, 0x00, 0x01, 0x00, 0x00);  // PWM externo
 
     // Inicialización de periféricos
     init_systick();
@@ -30,6 +31,7 @@ static void peripherals_init(void)
     nvic_exti_pc13_button_enable();
     nvic_usart2_irq_enable();
     tim3_ch1_pwm_init(1000);  // 1 kHz PWM
+
 }
 
 static void heartbeat_toggle(void)
@@ -37,6 +39,7 @@ static void heartbeat_toggle(void)
     static uint32_t last_toggle_time = 0;
     if ((system_ms_counter - last_toggle_time) >= 500) { // Toggle cada 500 ms
         gpio_toggle(GPIOA, 5);
+        
         last_toggle_time = system_ms_counter;
     }
 }
@@ -45,7 +48,7 @@ int main(void)
 {
     peripherals_init();
     room_control_app_init();
-    uart_send_string("Sistema de Control de Sala Inicializado!\r\n");
+    //uart_send_string("Sistema de Control de Sala Inicializado!\r\n");
 
     // Bucle principal: procesa eventos
     while (1) {

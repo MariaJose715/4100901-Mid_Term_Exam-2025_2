@@ -46,7 +46,9 @@ typedef struct {
 
 
 #define LD2_PIN     5U                                         // Pin PA5 (LED)
-#define B1_PIN      13U
+#define B1_PIN      13U                                        // Pin PC13 (Button)
+#define EXTERNO_LED_PWM_PIN        4U     // PB4 corregido (TIM3_CH1)
+#define EXTERNO_LED_PWM_PORT    GPIOB
 
 #define GPIO_MODE_INPUT     0x00
 #define GPIO_MODE_OUTPUT    0x01
