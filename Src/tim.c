@@ -4,8 +4,8 @@
 
 void tim3_ch1_pwm_init(uint32_t pwm_freq_hz)
 {
-    // 1. Configurar PA6 como Alternate Function (AF2) para TIM3_CH1
-    gpio_setup_pin(GPIOA, 6, GPIO_MODE_AF, 2);
+    // 1. Configurar PB4 como Alternate Function (AF2) para TIM3_CH1
+    gpio_setup_pin(GPIOB, 4, GPIO_MODE_AF, 2);
 
     // 2. Habilitar el reloj para TIM3
     rcc_tim3_clock_enable();

@@ -14,6 +14,8 @@ typedef enum {
 // Variable de estado global
 room_state_t current_state = ROOM_IDLE;
 static uint32_t led_on_time = 0;
+static uint32_t g_door_open = 0;
+static uint32_t g_door_open_tick = 0;
 
 void room_control_app_init(void)
 {
@@ -53,12 +55,22 @@ void room_control_on_uart_receive(char received_char)
             tim3_ch1_pwm_set_duty_cycle(0);
             uart_send_string("PWM: 0%\r\n");
             break;
-        case 'O':
+        case '0':
+            tim3_ch1_pwm_set_duty_cycle(0);
+            uart_send_string("Lámpara apagada.\r\n");
+            break;
+ 
         case 'o':
-            current_state = ROOM_OCCUPIED;
-            tim3_ch1_pwm_set_duty_cycle(100);
-            led_on_time = systick_get_ms();
-            uart_send_string("Sala ocupada\r\n");
+        case 'O':
+            gpio_write_pin(EXTERNO_LED_PWM_PORT, EXTERNO_LED_PWM_PIN, GPIO_PIN_SET);
+            g_door_open = 1;
+            uart_send_string("Puerta abierta.\r\n");
+            break;
+        case 'c':
+        case 'C':   
+            gpio_write_pin(EXTERNO_LED_PWM_PORT, EXTERNO_LED_PWM_PIN, GPIO_PIN_RESET);
+            g_door_open = 0;
+            uart_send_string("Puerta cerrada.\r\n");
             break;
         case 'I':
         case 'i':
