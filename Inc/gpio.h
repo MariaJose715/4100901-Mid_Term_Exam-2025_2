@@ -50,6 +50,10 @@ typedef struct {
 #define EXTERNO_LED_PWM_PIN        4U     // PB4 corregido (TIM3_CH1)
 #define EXTERNO_LED_PWM_PORT    GPIOB
 
+// Estados de Pin
+#define GPIO_PIN_RESET      0U
+#define GPIO_PIN_SET        1U
+
 #define GPIO_MODE_INPUT     0x00
 #define GPIO_MODE_OUTPUT    0x01
 #define GPIO_MODE_AF        0x02

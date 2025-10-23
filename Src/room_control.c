@@ -15,7 +15,10 @@ typedef enum {
 room_state_t current_state = ROOM_IDLE;
 static uint32_t led_on_time = 0;
 static uint32_t g_door_open = 0;
-static uint32_t g_door_open_tick = 0;
+static volatile uint32_t g_door_open_tick = 0;
+static volatile uint32_t g_last_light_button_tick = 0;
+static volatile uint8_t g_door_open = 0;
+static volatile uint32_t g_last_button_tick = 0;
 
 void room_control_app_init(void)
 {
