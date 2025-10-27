@@ -3,31 +3,38 @@
 
 #include <stdint.h>
 
-// Constantes
-#define LED_TIMEOUT_MS 3000  // Tiempo para apagar LED después de presionar botón
-#define PWM_INITIAL_DUTY 0   // Duty cycle inicial para PWM LED (IDLE = apagado)
+// -------------------------------------------------------------
+// Configuración general
+// -------------------------------------------------------------
+
+#define LED_TIMEOUT_MS     10000  // Tiempo (ms) para restaurar el brillo previo (10 s)
+#define PWM_INITIAL_DUTY   20     // Duty cycle inicial (20%)
+
+// -------------------------------------------------------------
+// Prototipos de funciones públicas
+// -------------------------------------------------------------
 
 /**
- * @brief Función a ser llamada por EXTI15_10_IRQHandler cuando se detecta
- *        la pulsación del botón B1.
- */
-void room_control_on_button_press(void);
-
-/**
- * @brief Función a ser llamada por USART2_IRQHandler cuando se recibe un carácter.
- * @param received_char El carácter recibido por UART.
- */
-void room_control_on_uart_receive(char received_char);
-
-/**
- * @brief (Opcional) Función para realizar inicializaciones específicas de la lógica
- *        de room_control, si las hubiera.
+ * @brief Inicializa la lógica de control de sala.
+ *        Configura el estado inicial, PWM y mensaje de bienvenida.
  */
 void room_control_app_init(void);
 
 /**
- * @brief Función para actualizar la lógica de estados periódicamente (llamar en el bucle principal).
- *        Maneja timeouts, transiciones automáticas, etc.
+ * @brief Maneja la pulsación del botón B1.
+ *        Cambia el estado de la sala (encendido temporal de 100%).
+ */
+void room_control_on_button_press(void);
+
+/**
+ * @brief Procesa un carácter recibido por UART (comandos del usuario).
+ * @param received_char Carácter recibido.
+ */
+void room_control_on_uart_receive(char received_char);
+
+/**
+ * @brief Actualiza el estado del sistema de forma periódica.
+ *        Maneja timeouts y transiciones graduales.
  */
 void room_control_update(void);
 
